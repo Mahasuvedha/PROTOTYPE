@@ -406,8 +406,18 @@
                     </tr>\
                     <tr>\
                         <th scope="row">PARKING </th>\
-                        <td>' + (feature.properties['PARKING '] !== null ? autolinker.link(String(feature.properties['PARKING ']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                        <td>' + (feature.properties['PARKING '] !== null 
+                            ? '<button onclick="window.location.href=\'' + String(feature.properties['PARKING ']).replace(/'/g, "\\'") + '\'">Open Link</button>' 
+                            : '') + '</td>\
                     </tr>\
+                </table>';
+
+var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+layer.on('popupopen', function(e) {
+    addClassToPopupIfMedia(content, e.popup);
+});
+layer.bindPopup(content, { maxHeight: 400 });
+
                 </table>';
             var content = removeEmptyRowsFromPopupContent(popupContent, feature);
 			layer.on('popupopen', function(e) {
